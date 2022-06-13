@@ -1,0 +1,21 @@
+Package: dd
+Title: Creates a data dictionary
+Version: 0.0.0.9000
+Authors@R: 
+    person("Bethany", "Jones", , "r.data.nerd@gmail.com", role = c("aut", "cre"))
+Description: Creates a data dictionary and individual variable summaries.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.0
+Imports:
+    data.table,
+    dplyr,
+    haven,
+    lubridate,
+    magrittr,
+    openxlsx,
+    stats,
+    tidyr,
+    tidyselect,
+    

@@ -1,0 +1,204 @@
+
+#' @importFrom tidyr 'pivot_longer'
+#' @importFrom tidyselect 'everything'
+#' @importFrom stats 'median'
+#' @importFrom lubridate 'date'
+#' @importFrom dplyr 'mutate'
+#' @import magrittr
+
+factor_summary <- function(dataset, column) {
+
+  a <- as.data.frame(table(dataset[[column]]))
+  names(a)[1] <- "summary"
+
+  # throw a warning in case it should be numeric or character
+  if (nrow(a) > 10) {
+    warning("Your factor variable has more than 10 levels, did you want a character variable?")
+  }
+
+  # this creates the factor level with it's value in parentheses
+  # e.g. Strongly disagree (5)
+  a <- a %>%
+    dplyr::mutate(summary = paste(summary, " (", as.numeric(summary), ")", sep = ""))
+
+  names(a)[2] <- "value"
+
+  a$item <- ""
+  a$item[1] <- gsub('"','', deparse(column))
+
+  a$class <- ""
+  a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
+
+  a$label <- ""
+  a$label[1] <- ifelse(
+    is.null(attr(dataset[[column]], "label")),
+    "No label", attr(dataset[[column]], "label")
+  )
+  vars <- c("item", "label", "class", "summary", "value")
+  a <- a[, vars]
+
+  a$value <- as.character(a$value)
+  return(a)
+}
+
+numeric_summary <- function(dataset, column) {
+
+  var <- dataset[[column]]
+
+  a <- as.data.frame(mean(var, na.rm = TRUE))
+  names(a)[1] <- "mean"
+
+  a$median = median(var, na.rm = TRUE)
+  a$min = min(var, na.rm = TRUE)
+  a$max = max(var, na.rm = TRUE)
+  a$missing = sum(is.na(dataset[[column]]))
+
+  a <- a %>%
+    pivot_longer(cols = everything(), names_to = "summary")
+
+  # pivot_longer creates a tibble which actually messes with output
+  a <- as.data.frame(a) # so coerce to df
+
+  a$item <- ""
+  a$item[1] <- gsub('"','', deparse(column))
+
+  a$class <- ""
+  a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
+
+  a$label <- ""
+  a$label[1] <- ifelse(
+    is.null(attr(dataset[[column]], "label")),
+    "No label", attr(dataset[[column]], "label"))
+
+  vars <- c("item", "label", "class", "summary", "value")
+
+  a <- a[, vars]
+
+  a$value <- as.character(a$value)
+
+  return(a)
+}
+
+
+character_summary <- function(dataset, column) {
+
+  var <- dataset[[column]]
+
+
+  a <- as.data.frame(length(unique(var)))
+  names(a)[1] <- "unique responses"
+
+  a$missing <- sum(is.na(var))
+
+  a <- a %>%
+    pivot_longer(cols = everything(), names_to = "summary")
+
+  if (a$value[1] < 10) {
+    warning("Your character variable has fewer than 10 unique values, did you want a factor?")
+  }
+
+  a <- as.data.frame(a)
+
+  a$item <- ""
+  a$item[1] <- gsub('"','', deparse(column))
+
+  a$class <- ""
+  a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
+
+  a$label <- ""
+  a$label[1] <- ifelse(
+    is.null(attr(dataset[[column]], "label")),
+    "No label", attr(dataset[[column]], "label"))
+
+  vars <- c("item", "label", "class", "summary", "value")
+
+  a <- a[, vars]
+
+  a$value <- as.character(a$value)
+
+  return(a)
+}
+
+
+logical_summary <- function(dataset, column) {
+
+  a <- as.data.frame(table(dataset[[column]]))
+  names(a)[1] <- "summary"
+  names(a)[2] <- "value"
+
+  a$item <- ""
+  a$item[1] <- gsub('"','', deparse(column))
+
+  a$class <- ""
+  a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
+
+  a$label <- ""
+  a$label[1] <- ifelse(
+    is.null(attr(dataset[[column]], "label")),
+    "No label", attr(dataset[[column]], "label")
+  )
+
+  vars <- c("item", "label", "class", "summary", "value")
+
+  a <- a[, vars]
+
+  a$value <- as.character(a$value)
+
+  return(a)
+
+}
+
+datetime_summary <- function(dataset, column) {
+
+  var <- lubridate::date(dataset[[column]])
+
+  a <- as.data.frame(as.character(mean(var, na.rm = TRUE)))
+  names(a)[1] <- "mean"
+
+  date_mode <- as.Date(mode_stat(var), origin = '1970-01-01')
+  a$mode = paste(date_mode, sep = ", ", collapse = " ")
+  a$min = as.character(min(var, na.rm = TRUE))
+  a$max = as.character(max(var, na.rm = TRUE))
+  a$missing = as.character(sum(is.na(dataset[[column]])))
+
+  a <- a %>%
+    pivot_longer(cols = everything(), names_to = "summary")
+  a <- as.data.frame(a)
+  # a$value <- as.Date(a$value, format = "%Y-%m-%d")
+
+  a$item <- ""
+  a$item[1] <- gsub('"','', deparse(column))
+
+  a$class <- ""
+  a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
+
+  a$label <- ""
+  a$label[1] <- ifelse(
+    is.null(attr(dataset[[column]], "label")),
+    "No label", attr(dataset[[column]], "label"))
+
+  vars <- c("item", "label", "class", "summary", "value")
+  a <- a[, vars]
+
+  a$value <- as.character(a$value)
+
+  return(a)
+}
+
+
+id_summary <- function(dataset, column) {
+
+  var <- dataset[[column]]
+
+  item <- gsub('"','', deparse(column))
+  label <- "Unique identifier"
+  class <- ""
+  summary <- "unique values"
+  value <- length(unique(var))
+
+  a <- data.frame(item, label, class, summary, value)
+
+  a$value <- as.character(a$value)
+
+  return(a)
+}
