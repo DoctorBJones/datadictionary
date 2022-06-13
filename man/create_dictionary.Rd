@@ -4,16 +4,14 @@
 \alias{create_dictionary}
 \title{Create a data dictionary from any dataset}
 \usage{
-create_dictionary(dataset, id_var = NULL, file = NULL, output = FALSE, ...)
+create_dictionary(dataset, id_var = NULL, file = NULL, ...)
 }
 \arguments{
 \item{dataset}{The dataset you wish to summarise}
 
 \item{id_var}{A variable or vector of variables that are identifiers (optional)}
 
-\item{file}{The filepath the write an Excel spreadsheet}
-
-\item{output}{Output to console (default = FALSE)}
+\item{file}{The filepath the write an Excel spreadsheet (optional)}
 
 \item{...}{Other arguments}
 }
@@ -21,5 +19,5 @@ create_dictionary(dataset, id_var = NULL, file = NULL, output = FALSE, ...)
 Either an Excel spreadsheet or a dataframe
 }
 \description{
-Note: you must specify one of output = TRUE or supply an argument to file.
+Create a data dictionary from any dataset
 }

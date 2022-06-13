@@ -1,12 +1,10 @@
 
 #' Create a data dictionary from any dataset
 #'
-#' Note: you must specify one of output = TRUE or supply an argument to file.
 #'
 #' @param dataset The dataset you wish to summarise
 #' @param id_var A variable or vector of variables that are identifiers (optional)
-#' @param file The filepath the write an Excel spreadsheet
-#' @param output Output to console (default = FALSE)
+#' @param file The filepath the write an Excel spreadsheet (optional)
 #' @param ... Other arguments
 
 #' @return Either an Excel spreadsheet or a dataframe
@@ -16,15 +14,13 @@
 #' @importFrom openxlsx 'write.xlsx'
 #'
 #' @export
-create_dictionary <- function(dataset, id_var = NULL, file = NULL, output = FALSE, ...) {
+create_dictionary <- function(dataset, id_var = NULL, file = NULL, ...) {
 
-  # must have at least one of output or file, but only one
-  if ((!is.null(file)) && output == TRUE) {
-    stop("You must specify only one of 'output' or 'file'")
-  }
-
-  if (is.null(file) && output == FALSE) {
-    stop("You must specify one of 'output' or 'file'")
+  # if a filepath isn't specific then just output it to console/object
+  if (is.null(file)) {
+    output = TRUE
+  } else {
+    output = FALSE
   }
 
   # initialise empty dataframe that will be the output
