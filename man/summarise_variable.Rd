@@ -17,3 +17,8 @@ A dataframe with a summary of the variable
 \description{
 Summarise a single variable
 }
+\examples{
+ summarise_variable(mtcars, "mpg")
+
+ summarise_variable(iris, "Species")
+}

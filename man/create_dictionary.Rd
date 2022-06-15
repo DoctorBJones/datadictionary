@@ -21,3 +21,10 @@ Either an Excel spreadsheet or a dataframe
 \description{
 Create a data dictionary from any dataset
 }
+\examples{
+ create_dictionary(esoph)
+
+ mtcars$id <- 1:nrow(mtcars)
+ create_dictionary(mtcars, id_var = "id")
+
+}

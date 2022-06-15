@@ -13,6 +13,12 @@
 #' @importFrom data.table '%like%'
 #' @importFrom openxlsx 'write.xlsx'
 #'
+#' @examples
+#'  create_dictionary(esoph)
+#'
+#'  mtcars$id <- 1:nrow(mtcars)
+#'  create_dictionary(mtcars, id_var = "id")
+#'
 #' @export
 create_dictionary <- function(dataset, id_var = NULL, file = NULL, ...) {
 
