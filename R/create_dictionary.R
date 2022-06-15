@@ -16,7 +16,6 @@
 #' @export
 create_dictionary <- function(dataset, id_var = NULL, file = NULL, ...) {
 
-  # if a filepath isn't specific then just output it to console/object
   if (is.null(file)) {
     output = TRUE
   } else {
@@ -28,12 +27,6 @@ create_dictionary <- function(dataset, id_var = NULL, file = NULL, ...) {
 
   # create internal variable for the dataset
   df <- dataset
-
-  # check if there are any labelled vars, and coerce to factor if TRUE
-  if (any(lapply(dataset, class) %like% "label")) {
-    df <- haven::as_factor(dataset, only_labelled = TRUE)
-    warning("Labelled data has been coerced to a factor")
-  }
 
   # Use the id summary function for id var/s
   # remove the id vars from internal version of the data

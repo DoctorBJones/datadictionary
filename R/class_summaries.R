@@ -4,6 +4,7 @@
 #' @importFrom stats 'median'
 #' @importFrom lubridate 'date'
 #' @importFrom dplyr 'mutate'
+#' @importFrom tibble 'rownames_to_column'
 #' @import magrittr
 
 factor_summary <- function(dataset, column) {
@@ -185,6 +186,42 @@ datetime_summary <- function(dataset, column) {
   return(a)
 }
 
+label_summary <- function(dataset, column) {
+
+  label_values <- as.data.frame(attributes(dataset[[column]])$labels) %>%
+    tibble::rownames_to_column()
+
+  names(label_values)[1] <- "label"
+  names(label_values)[2] <- "value"
+
+  label_values$summary <- paste(label_values$label, " (", label_values$value, ")",
+                                sep = "")
+
+  a <- as.data.frame(table(dataset[[column]]))
+  names(a)[1] <- "num_val"
+  names(a)[2] <- "value"
+
+  a <- merge(a, label_values, by.x = "num_val", by.y = "value")
+
+  a$item <- ""
+  a$item[1] <- gsub('"','', deparse(column))
+
+  a$class <- ""
+  a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
+
+  a$label <- ""
+  a$label[1] <- ifelse(
+    is.null(attr(dataset[[column]], "label")),
+    "No label", attr(dataset[[column]], "label"))
+
+  vars <- c("item", "label", "class", "summary", "value")
+  a <- a[, vars]
+
+  a$value <- as.character(a$value)
+
+  return(a)
+
+}
 
 id_summary <- function(dataset, column) {
 

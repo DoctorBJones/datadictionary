@@ -13,6 +13,8 @@ summarise_variable <- function(dataset, column) {
 
   if ("factor" %in% x) {
     factor_summary(dataset, column)
+  } else if ( x[1] %like% "label") {
+    label_summary(dataset, column)
   } else if ("POSIXt" %in% x) {
     datetime_summary(dataset, column)
   } else if (x %in% c("numeric", "integer", "double")) {
