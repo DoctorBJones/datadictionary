@@ -16,7 +16,9 @@ summarise_variable <- function(dataset, column) {
 
   x <- class(dataset[[column]])
 
-  if ("factor" %in% x) {
+  if (sum(is.na(dataset[[column]])) == length(dataset[[column]])) {
+    allna_summary(dataset, column)
+  } else if ("factor" %in% x) {
     factor_summary(dataset, column)
   } else if ( x[1] %like% "label") {
     label_summary(dataset, column)
@@ -31,4 +33,3 @@ summarise_variable <- function(dataset, column) {
   }
 
 }
-

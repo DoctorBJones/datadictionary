@@ -223,6 +223,17 @@ label_summary <- function(dataset, column) {
 
 }
 
+allna_summary <- function(dataset, column) {
+
+  a <- data.frame(item = gsub('"','', deparse(column)),
+                  label = ifelse(
+                    is.null(attr(dataset[[column]], "label")),
+                    "No label", attr(dataset[[column]], "label")),
+                  class = paste(class(dataset[[column]]), sep = " ", collapse = " "),
+                  summary = "missing",
+                  value = length(dataset[[column]]))
+}
+
 id_summary <- function(dataset, column) {
 
   var <- dataset[[column]]
