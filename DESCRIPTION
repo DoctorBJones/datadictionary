@@ -12,6 +12,7 @@ Imports:
     data.table,
     dplyr,
     haven,
+    Hmisc,
     lubridate,
     magrittr,
     openxlsx,

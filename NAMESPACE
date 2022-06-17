@@ -3,6 +3,7 @@
 export(create_dictionary)
 export(summarise_variable)
 import(magrittr)
+importFrom(Hmisc,'upData')
 importFrom(data.table,'%like%')
 importFrom(dplyr,'mutate')
 importFrom(haven,'as_factor')

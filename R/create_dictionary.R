@@ -3,8 +3,9 @@
 #'
 #'
 #' @param dataset The dataset you wish to summarise
-#' @param id_var A variable or vector of variables that are identifiers (optional)
 #' @param file The filepath the write an Excel spreadsheet (optional)
+#' @param var_labels A named vector of variable labels (optional)
+#' @param id_var A variable or vector of variables that are identifiers (optional)
 #' @param ... Other arguments
 
 #' @return Either an Excel spreadsheet or a dataframe
@@ -12,6 +13,7 @@
 #' @importFrom haven 'as_factor'
 #' @importFrom data.table '%like%'
 #' @importFrom openxlsx 'write.xlsx'
+#' @importFrom Hmisc 'upData'
 #'
 #' @examples
 #'  create_dictionary(esoph)
@@ -19,13 +21,20 @@
 #'  mtcars$id <- 1:nrow(mtcars)
 #'  create_dictionary(mtcars, id_var = "id")
 #'
+#'  iris.labels <- c(Sepal.Lenth = "Sepal length in mm", Sepal.Width = "Sepal width in mm")
+#'  create_dictionary(iris, var_labels = iris.labels)
+#'
 #' @export
-create_dictionary <- function(dataset, id_var = NULL, file = NULL, ...) {
+create_dictionary <- function(dataset,  file = NULL, var_labels = NULL, id_var = NULL, ...) {
 
   if (is.null(file)) {
     output = TRUE
   } else {
     output = FALSE
+  }
+
+  if (! is.null(var_labels)) {
+    dataset <- Hmisc::upData(dataset, labels = var_labels)
   }
 
   # initialise empty dataframe that will be the output

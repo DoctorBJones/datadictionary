@@ -49,7 +49,7 @@ numeric_summary <- function(dataset, column) {
   a <- as.data.frame(mean(var, na.rm = TRUE))
   names(a)[1] <- "mean"
 
-  a$median = median(var, na.rm = TRUE)
+  a$median = as.numeric(median(var, na.rm = TRUE))
   a$min = min(var, na.rm = TRUE)
   a$max = max(var, na.rm = TRUE)
   a$missing = sum(is.na(dataset[[column]]))

@@ -4,7 +4,7 @@
 \alias{create_dictionary}
 \title{Create a data dictionary from any dataset}
 \usage{
-create_dictionary(dataset, id_var = NULL, file = NULL, ...)
+create_dictionary(dataset, id_var = NULL, file = NULL, var_labels = NULL, ...)
 }
 \arguments{
 \item{dataset}{The dataset you wish to summarise}
@@ -12,6 +12,8 @@ create_dictionary(dataset, id_var = NULL, file = NULL, ...)
 \item{id_var}{A variable or vector of variables that are identifiers (optional)}
 
 \item{file}{The filepath the write an Excel spreadsheet (optional)}
+
+\item{var_labels}{A named vector of variable labels (optional)}
 
 \item{...}{Other arguments}
 }
@@ -26,5 +28,8 @@ Create a data dictionary from any dataset
 
  mtcars$id <- 1:nrow(mtcars)
  create_dictionary(mtcars, id_var = "id")
+
+ iris.labels <- c(Sepal.Lenth = "Sepal length in mm", Sepal.Width = "Sepal width in mm")
+ create_dictionary(iris, var_labels = iris.labels)
 
 }

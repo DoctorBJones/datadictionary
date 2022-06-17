@@ -20,11 +20,13 @@ summarise_variable <- function(dataset, column) {
     allna_summary(dataset, column)
   } else if ("factor" %in% x) {
     factor_summary(dataset, column)
-  } else if ( x[1] %like% "label") {
+  } else if ( x[1] == "haven_labelled") {
     label_summary(dataset, column)
   } else if ("POSIXt" %in% x) {
     datetime_summary(dataset, column)
-  } else if (x %in% c("numeric", "integer", "double")) {
+  } else if ("numeric" %in% x ||
+             "integer" %in% x ||
+             "double" %in% x) {
     numeric_summary(dataset, column)
   } else if (x %in% c("logical", "boolean")) {
     logical_summary(dataset, column)
