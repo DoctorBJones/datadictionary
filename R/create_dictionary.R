@@ -3,10 +3,9 @@
 #'
 #'
 #' @param dataset The dataset you wish to summarise
-#' @param file The filepath the write an Excel spreadsheet (optional)
+#' @param file The filepath to write an Excel spreadsheet (optional)
 #' @param var_labels A named vector of variable labels (optional)
 #' @param id_var A variable or vector of variables that are identifiers (optional)
-#' @param ... Other arguments
 
 #' @return Either an Excel spreadsheet or a dataframe
 #'
@@ -16,16 +15,20 @@
 #' @importFrom Hmisc 'upData'
 #'
 #' @examples
+#'
+#'  # A simple dictionary printed to console
 #'  create_dictionary(esoph)
 #'
+#'  # You can specify id variable/s
 #'  mtcars$id <- 1:nrow(mtcars)
 #'  create_dictionary(mtcars, id_var = "id")
 #'
-#'  iris.labels <- c(Sepal.Lenth = "Sepal length in mm", Sepal.Width = "Sepal width in mm")
+#'  # You can also specify labels with a named vector
+#'  iris.labels <- c(Sepal.Length = "Sepal length in mm", Sepal.Width = "Sepal width in mm")
 #'  create_dictionary(iris, var_labels = iris.labels)
 #'
 #' @export
-create_dictionary <- function(dataset,  file = NULL, var_labels = NULL, id_var = NULL, ...) {
+create_dictionary <- function(dataset, id_var = NULL, file = NULL, var_labels = NULL) {
 
   if (is.null(file)) {
     output = TRUE
@@ -37,8 +40,8 @@ create_dictionary <- function(dataset,  file = NULL, var_labels = NULL, id_var =
     dataset <- Hmisc::upData(dataset, labels = var_labels)
   }
 
-  # initialise empty dataframe that will be the output
-  out <- data.frame()
+  # initialise output dataframe with dataset summaries
+  out <- dataset_summary(dataset)
 
   # create internal variable for the dataset
   df <- dataset

@@ -250,3 +250,31 @@ id_summary <- function(dataset, column) {
 
   return(a)
 }
+
+dataset_summary <- function(dataset) {
+
+  x <- as.data.frame(nrow(dataset))
+  y <- as.data.frame(ncol(dataset))
+
+  a <- cbind(x, y)
+  names(a)[1] <- "Rows in dataset"
+  names(a)[2] <- "Columns in dataset"
+
+  a <- a %>%
+    pivot_longer(cols = everything(), names_to = "summary")
+  a <- as.data.frame(a)
+
+  a$item <- ""
+
+  a$class <- ""
+
+  a$label <- ""
+
+  vars <- c("item", "label", "class", "summary", "value")
+
+  a <- a[, vars]
+
+  a$value <- as.character(a$value)
+
+  return(a)
+}

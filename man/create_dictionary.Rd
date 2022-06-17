@@ -4,18 +4,16 @@
 \alias{create_dictionary}
 \title{Create a data dictionary from any dataset}
 \usage{
-create_dictionary(dataset, id_var = NULL, file = NULL, var_labels = NULL, ...)
+create_dictionary(dataset, id_var = NULL, file = NULL, var_labels = NULL)
 }
 \arguments{
 \item{dataset}{The dataset you wish to summarise}
 
 \item{id_var}{A variable or vector of variables that are identifiers (optional)}
 
-\item{file}{The filepath the write an Excel spreadsheet (optional)}
+\item{file}{The filepath to write an Excel spreadsheet (optional)}
 
 \item{var_labels}{A named vector of variable labels (optional)}
-
-\item{...}{Other arguments}
 }
 \value{
 Either an Excel spreadsheet or a dataframe
@@ -24,12 +22,16 @@ Either an Excel spreadsheet or a dataframe
 Create a data dictionary from any dataset
 }
 \examples{
+
+ # A simple dictionary printed to console
  create_dictionary(esoph)
 
+ # You can specify id variable/s
  mtcars$id <- 1:nrow(mtcars)
  create_dictionary(mtcars, id_var = "id")
 
- iris.labels <- c(Sepal.Lenth = "Sepal length in mm", Sepal.Width = "Sepal width in mm")
+ # You can also specify labels with a named vector
+ iris.labels <- c(Sepal.Length = "Sepal length in mm", Sepal.Width = "Sepal width in mm")
  create_dictionary(iris, var_labels = iris.labels)
 
 }
