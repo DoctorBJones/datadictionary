@@ -3,12 +3,14 @@ Title: Creates a data dictionary
 Version: 0.1.0
 Authors@R: 
     person("Bethany", "Jones", , "r.data.nerd@gmail.com", role = c("aut", "cre"))
-Description: Creates a data dictionary from any dataset. It includes overall summaries 
-    of rows and columns and at-a-glance summaries of each variable including mean, median, min and max
-    for numeric variables, counts in each level for factors, and the number of responses and missing for
-    character variables. You can nominate one or more id variables, for example individuals and clusters,
-    so you don't get nonsense data summaries for these variables. You can also include a vector to add 
-    labels if you want descriptions included in the document. You can opt for the output to write directly to Excel.
+Description: Creates a data dictionary from any dataset. It includes overall 
+    summaries of rows and columns and at-a-glance summaries of each variable 
+    including mean, median, min and max for numeric variables, counts in each
+    level for factors, and the number of responses and missing for character 
+    variables. You can nominate one or more id variables, for example individuals 
+    and clusters, so you don't get nonsense data summaries for these variables. 
+    You can also include a vector to add labels if you want descriptions included 
+    in the document. You can opt for the output to write directly to Excel.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
