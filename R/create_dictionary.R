@@ -37,10 +37,12 @@ create_dictionary <- function(dataset, id_var = NULL, file = NULL, var_labels = 
   }
 
   if (! is.null(var_labels)) {
+
     dataset <- Hmisc::upData(dataset, labels = var_labels)
+
   }
 
-  # initialise output dataframe with dataset summaries
+  # initialise empty dataframe that will be the output
   out <- dataset_summary(dataset)
 
   # create internal variable for the dataset
@@ -59,7 +61,6 @@ create_dictionary <- function(dataset, id_var = NULL, file = NULL, var_labels = 
 
       df <- df[, ! names(df) == i]    }
   }
-
 
   # find the names of the internal dataframe to iterate over
   df_col <- colnames(df)

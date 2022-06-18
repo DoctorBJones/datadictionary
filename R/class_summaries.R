@@ -1,4 +1,5 @@
 
+
 #' @importFrom tidyr 'pivot_longer'
 #' @importFrom tidyselect 'everything'
 #' @importFrom stats 'median'
@@ -8,7 +9,6 @@
 #' @import magrittr
 
 factor_summary <- function(dataset, column) {
-
   a <- as.data.frame(table(dataset[[column]]))
   names(a)[1] <- "summary"
 
@@ -19,31 +19,32 @@ factor_summary <- function(dataset, column) {
 
   # this creates the factor level with it's value in parentheses
   # e.g. Strongly disagree (5)
+
   a <- a %>%
     dplyr::mutate(summary = paste(summary, " (", as.numeric(summary), ")", sep = ""))
 
   names(a)[2] <- "value"
 
   a$item <- ""
-  a$item[1] <- gsub('"','', deparse(column))
+  a$item[1] <- gsub('"', '', deparse(column))
 
   a$class <- ""
-  a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
+  a$class[1] <-
+    paste(class(dataset[[column]]), sep = " ", collapse = " ")
 
   a$label <- ""
-  a$label[1] <- ifelse(
-    is.null(attr(dataset[[column]], "label")),
-    "No label", attr(dataset[[column]], "label")
-  )
+  a$label[1] <- ifelse(is.null(attr(dataset[[column]], "label")),
+                       "No label", attr(dataset[[column]], "label"))
   vars <- c("item", "label", "class", "summary", "value")
   a <- a[, vars]
+  a[nrow(a) + 1, ] <-
+    c("", "", "", "missing", sum(is.na(dataset[[column]])))
 
   a$value <- as.character(a$value)
   return(a)
 }
 
 numeric_summary <- function(dataset, column) {
-
   var <- dataset[[column]]
 
   a <- as.data.frame(mean(var, na.rm = TRUE))
@@ -61,18 +62,17 @@ numeric_summary <- function(dataset, column) {
   a <- as.data.frame(a) # so coerce to df
 
   a$item <- ""
-  a$item[1] <- gsub('"','', deparse(column))
+  a$item[1] <- gsub('"', '', deparse(column))
 
   a$class <- ""
-  a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
+  a$class[1] <-
+    paste(class(dataset[[column]]), sep = " ", collapse = " ")
 
   a$label <- ""
-  a$label[1] <- ifelse(
-    is.null(attr(dataset[[column]], "label")),
-    "No label", attr(dataset[[column]], "label"))
+  a$label[1] <- ifelse(is.null(attr(dataset[[column]], "label")),
+                       "No label", attr(dataset[[column]], "label"))
 
   vars <- c("item", "label", "class", "summary", "value")
-
   a <- a[, vars]
 
   a$value <- as.character(a$value)
@@ -82,7 +82,6 @@ numeric_summary <- function(dataset, column) {
 
 
 character_summary <- function(dataset, column) {
-
   var <- dataset[[column]]
 
 
@@ -101,18 +100,17 @@ character_summary <- function(dataset, column) {
   a <- as.data.frame(a)
 
   a$item <- ""
-  a$item[1] <- gsub('"','', deparse(column))
+  a$item[1] <- gsub('"', '', deparse(column))
 
   a$class <- ""
-  a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
+  a$class[1] <-
+    paste(class(dataset[[column]]), sep = " ", collapse = " ")
 
   a$label <- ""
-  a$label[1] <- ifelse(
-    is.null(attr(dataset[[column]], "label")),
-    "No label", attr(dataset[[column]], "label"))
+  a$label[1] <- ifelse(is.null(attr(dataset[[column]], "label")),
+                       "No label", attr(dataset[[column]], "label"))
 
   vars <- c("item", "label", "class", "summary", "value")
-
   a <- a[, vars]
 
   a$value <- as.character(a$value)
@@ -142,6 +140,8 @@ logical_summary <- function(dataset, column) {
   vars <- c("item", "label", "class", "summary", "value")
 
   a <- a[, vars]
+  a$summary <- as.character(a$summary)
+  a[nrow(a) + 1,] <- c("", "", "", "missing", sum(is.na(dataset[[column]])))
 
   a$value <- as.character(a$value)
 
@@ -149,8 +149,8 @@ logical_summary <- function(dataset, column) {
 
 }
 
-datetime_summary <- function(dataset, column) {
 
+datetime_summary <- function(dataset, column) {
   var <- lubridate::date(dataset[[column]])
 
   a <- as.data.frame(as.character(mean(var, na.rm = TRUE)))
@@ -168,15 +168,15 @@ datetime_summary <- function(dataset, column) {
   # a$value <- as.Date(a$value, format = "%Y-%m-%d")
 
   a$item <- ""
-  a$item[1] <- gsub('"','', deparse(column))
+  a$item[1] <- gsub('"', '', deparse(column))
 
   a$class <- ""
-  a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
+  a$class[1] <-
+    paste(class(dataset[[column]]), sep = " ", collapse = " ")
 
   a$label <- ""
-  a$label[1] <- ifelse(
-    is.null(attr(dataset[[column]], "label")),
-    "No label", attr(dataset[[column]], "label"))
+  a$label[1] <- ifelse(is.null(attr(dataset[[column]], "label")),
+                       "No label", attr(dataset[[column]], "label"))
 
   vars <- c("item", "label", "class", "summary", "value")
   a <- a[, vars]
@@ -187,15 +187,16 @@ datetime_summary <- function(dataset, column) {
 }
 
 label_summary <- function(dataset, column) {
-
-  label_values <- as.data.frame(attributes(dataset[[column]])$labels) %>%
-    tibble::rownames_to_column()
+  label_values <-
+    as.data.frame(attributes(dataset[[column]])$labels) %>%
+    rownames_to_column()
 
   names(label_values)[1] <- "label"
   names(label_values)[2] <- "value"
 
-  label_values$summary <- paste(label_values$label, " (", label_values$value, ")",
-                                sep = "")
+  label_values$summary <-
+    paste(label_values$label, " (", label_values$value, ")",
+          sep = "")
 
   a <- as.data.frame(table(dataset[[column]]))
   names(a)[1] <- "num_val"
@@ -204,55 +205,57 @@ label_summary <- function(dataset, column) {
   a <- merge(a, label_values, by.x = "num_val", by.y = "value")
 
   a$item <- ""
-  a$item[1] <- gsub('"','', deparse(column))
+  a$item[1] <- gsub('"', '', deparse(column))
 
   a$class <- ""
-  a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
+  a$class[1] <-
+    paste(class(dataset[[column]]), sep = " ", collapse = " ")
 
   a$label <- ""
-  a$label[1] <- ifelse(
-    is.null(attr(dataset[[column]], "label")),
-    "No label", attr(dataset[[column]], "label"))
+  a$label[1] <- ifelse(is.null(attr(dataset[[column]], "label")),
+                       "No label", attr(dataset[[column]], "label"))
 
   vars <- c("item", "label", "class", "summary", "value")
   a <- a[, vars]
-
+  a[nrow(a) + 1, ] <-
+    c("", "", "", "missing", sum(is.na(dataset[[column]])))
   a$value <- as.character(a$value)
 
   return(a)
 
 }
 
-allna_summary <- function(dataset, column) {
-
-  a <- data.frame(item = gsub('"','', deparse(column)),
-                  label = ifelse(
-                    is.null(attr(dataset[[column]], "label")),
-                    "No label", attr(dataset[[column]], "label")),
-                  class = paste(class(dataset[[column]]), sep = " ", collapse = " "),
-                  summary = "missing",
-                  value = length(dataset[[column]]))
-}
 
 id_summary <- function(dataset, column) {
-
   var <- dataset[[column]]
 
-  item <- gsub('"','', deparse(column))
+  item <- gsub('"', '', deparse(column))
   label <- "Unique identifier"
   class <- ""
   summary <- "unique values"
   value <- length(unique(var))
 
   a <- data.frame(item, label, class, summary, value)
+  a[nrow(a) + 1, ] <-
+    c("", "", "", "missing", sum(is.na(dataset[[column]])))
 
   a$value <- as.character(a$value)
 
   return(a)
 }
 
-dataset_summary <- function(dataset) {
+allna_summary <- function(dataset, column) {
+  a <- data.frame(
+    item = gsub('"', '', deparse(column)),
+    label = ifelse(is.null(attr(dataset[[column]], "label")),
+                   "No label", attr(dataset[[column]], "label")),
+    class = paste(class(dataset[[column]]), sep = " ", collapse = " "),
+    summary = "missing",
+    value = length(dataset[[column]])
+  )
+}
 
+dataset_summary <- function(dataset) {
   x <- as.data.frame(nrow(dataset))
   y <- as.data.frame(ncol(dataset))
 
@@ -271,7 +274,6 @@ dataset_summary <- function(dataset) {
   a$label <- ""
 
   vars <- c("item", "label", "class", "summary", "value")
-
   a <- a[, vars]
 
   a$value <- as.character(a$value)
