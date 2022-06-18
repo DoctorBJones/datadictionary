@@ -47,7 +47,7 @@ factor_summary <- function(dataset, column) {
 numeric_summary <- function(dataset, column) {
   var <- dataset[[column]]
 
-  a <- as.data.frame(mean(var, na.rm = TRUE))
+  a <- as.data.frame(round(mean(var, na.rm = TRUE)), digits = 4)
   names(a)[1] <- "mean"
 
   a$median = as.numeric(median(var, na.rm = TRUE))

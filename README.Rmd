@@ -1,0 +1,81 @@
+---
+output: github_document
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# dd
+
+The goal of dd is to create a data dictionary from any dataset in your R environment. While other packages exist I found the output wasn't able to be easily captured in a single view. They were either very long, such as many pages of output in word or pdf format, or very wide, such as concatenating all levels of factor variables in a single string. This package attempts to solve those problems by presenting summaries of the dataset in a format that fits easily in a pane or screen, without using word or pdf outputs. It also presents different summaries for different variable types. For example, numeric data returns mean, median, min and max, whereas factor variables return a count of each level of the factor. All variable summaries include a count of missing.
+
+It includes overall summaries of rows and columns and at-a-glance summaries of each variable including mean, median, min and max for numeric variables, counts in each level for factors, and the number of responses and missing for character variables. 
+
+You can nominate one or more id variables, for example individuals and clusters, so you don't get nonsense data summaries for these variables. You can also include a vector to add labels if you want descriptions included 
+in the document. You can opt for the output to write directly to Excel.
+
+
+## Installation
+
+You can install the development version of dd from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("DoctorBJones/dd")
+```
+
+## Example
+
+You can print a basic data dictionary directly to your console or assign it to an object in your environment:
+
+```{r}
+library(dd)
+
+create_dictionary(esoph)
+
+esoph_dictionary <- create_dictionary(esoph)
+```
+
+
+You can also specify one or more identifier variables. This is useful if you have hierarchical data, for example and have identifiers for individual, clusters or blocks.
+
+```{r}
+
+# create fake id variables
+mtcars$id1 <- 1:nrow(mtcars)
+mtcars$id2 <- mtcars$id1*10
+
+create_dictionary(mtcars, id_var = c("id1", "id2"))
+
+```
+You can also optionally add labels for variables that have no labels. You can specify all columns or only a few. You need to pass a named vector where the names correspond to columns in your dataset.
+
+```{r}
+
+# Create labels as a named vector. 
+iris.labels <- c(Sepal.Length = "Sepal length in mm", Sepal.Width = "Sepal width in mm")
+
+create_dictionary(iris, var_labels = iris.labels)
+```
+
+You can also write directly to Excel from the `create_dictionary` function if you pass a filepath and name as a quoted string. There is no visible output for this use.
+
+```{r, eval = FALSE}
+
+create_dictionary(ChickWeight, file = "chickweight_dictionary.xlsx")
+
+```
+
+The package also includes a function to create a summary of a single variable in your dataset.
+```{r}
+
+summarise_variable(iris, "Sepal.Length")
+
+summarise_variable(ChickWeight, "Diet")
+```
