@@ -284,8 +284,7 @@ dataset_summary <- function(dataset) {
 #' Get the mode of a vector
 #' @param x A vector
 #' @param freq Boolean when TRUE returns the frequency of the mode
-#' @noRd
-
+#' @keywords internal
 mode_stat <- function(x, freq = FALSE) {
   z <- 2
   if (freq)
