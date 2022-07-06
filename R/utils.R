@@ -14,14 +14,18 @@ factor_summary <- function(dataset, column) {
 
   # throw a warning in case it should be numeric or character
   if (nrow(a) > 10) {
-    warning("Your factor variable has more than 10 levels, did you want a character variable?")
+    msg <- paste0(column, " has more than 10 levels, did you want a character variable?")
+    warning(msg)
   }
 
   # this creates the factor level with it's value in parentheses
   # e.g. Strongly disagree (5)
 
   a <- a %>%
-    dplyr::mutate(summary = paste(summary, " (", as.numeric(summary), ")", sep = ""))
+    dplyr::mutate(summary = paste(summary,
+                                  " (",
+                                  as.numeric(summary),
+                                  ")", sep = ""))
 
   names(a)[2] <- "value"
 
@@ -94,7 +98,8 @@ character_summary <- function(dataset, column) {
     pivot_longer(cols = everything(), names_to = "summary")
 
   if (a$value[1] < 10) {
-    warning("Your character variable has fewer than 10 unique values, did you want a factor?")
+    msg <- paste0(column, " has fewer than 10 unique values, did you want a factor?")
+    warning(msg)
   }
 
   a <- as.data.frame(a)
@@ -126,7 +131,7 @@ logical_summary <- function(dataset, column) {
   names(a)[2] <- "value"
 
   a$item <- ""
-  a$item[1] <- gsub('"','', deparse(column))
+  a$item[1] <- gsub('"', '', deparse(column))
 
   a$class <- ""
   a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
@@ -141,7 +146,7 @@ logical_summary <- function(dataset, column) {
 
   a <- a[, vars]
   a$summary <- as.character(a$summary)
-  a[nrow(a) + 1,] <- c("", "", "", "missing", sum(is.na(dataset[[column]])))
+  a[nrow(a) + 1, ] <- c("", "", "", "missing", sum(is.na(dataset[[column]])))
 
   a$value <- as.character(a$value)
 
@@ -165,7 +170,6 @@ datetime_summary <- function(dataset, column) {
   a <- a %>%
     pivot_longer(cols = everything(), names_to = "summary")
   a <- as.data.frame(a)
-  # a$value <- as.Date(a$value, format = "%Y-%m-%d")
 
   a$item <- ""
   a$item[1] <- gsub('"', '', deparse(column))
@@ -305,4 +309,3 @@ mode_stat <- function(x, freq = FALSE) {
 
   run[which(run$freq == max(run$freq)), z]
 }
-

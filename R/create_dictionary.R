@@ -5,7 +5,7 @@
 #' @param dataset The dataset you wish to summarise
 #' @param file The filepath to write an Excel spreadsheet (optional)
 #' @param var_labels A named vector of variable labels (optional)
-#' @param id_var A variable or vector of variables that are identifiers (optional)
+#' @param id_var A variable/vector of variables that are identifiers (optional)
 
 #' @return Either an Excel spreadsheet or a dataframe
 #'
@@ -24,11 +24,15 @@
 #'  create_dictionary(mtcars, id_var = "id")
 #'
 #'  # You can also specify labels with a named vector
-#'  iris.labels <- c(Sepal.Length = "Sepal length in mm", Sepal.Width = "Sepal width in mm")
+#'  iris.labels <- c(Sepal.Length = "Sepal length in mm",
+#'      Sepal.Width = "Sepal width in mm")
 #'  create_dictionary(iris, var_labels = iris.labels)
 #'
 #' @export
-create_dictionary <- function(dataset, id_var = NULL, file = NULL, var_labels = NULL) {
+create_dictionary <- function(dataset,
+                              id_var = NULL,
+                              file = NULL,
+                              var_labels = NULL) {
 
   if (is.null(file)) {
     output = TRUE
@@ -37,9 +41,7 @@ create_dictionary <- function(dataset, id_var = NULL, file = NULL, var_labels = 
   }
 
   if (! is.null(var_labels)) {
-
     dataset <- Hmisc::upData(dataset, labels = var_labels)
-
   }
 
   # initialise empty dataframe that will be the output
@@ -59,7 +61,8 @@ create_dictionary <- function(dataset, id_var = NULL, file = NULL, var_labels = 
 
       out <- rbind(out, f)
 
-      df <- df[, ! names(df) == i]    }
+      df <- df[, ! names(df) == i]
+      }
   }
 
   # find the names of the internal dataframe to iterate over

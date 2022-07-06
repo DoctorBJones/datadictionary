@@ -9,7 +9,7 @@ create_dictionary(dataset, id_var = NULL, file = NULL, var_labels = NULL)
 \arguments{
 \item{dataset}{The dataset you wish to summarise}
 
-\item{id_var}{A variable or vector of variables that are identifiers (optional)}
+\item{id_var}{A variable/vector of variables that are identifiers (optional)}
 
 \item{file}{The filepath to write an Excel spreadsheet (optional)}
 
@@ -31,7 +31,8 @@ Create a data dictionary from any dataset
  create_dictionary(mtcars, id_var = "id")
 
  # You can also specify labels with a named vector
- iris.labels <- c(Sepal.Length = "Sepal length in mm", Sepal.Width = "Sepal width in mm")
+ iris.labels <- c(Sepal.Length = "Sepal length in mm",
+     Sepal.Width = "Sepal width in mm")
  create_dictionary(iris, var_labels = iris.labels)
 
 }
