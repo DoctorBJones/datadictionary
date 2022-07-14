@@ -5,6 +5,7 @@
 #' @importFrom lubridate 'date'
 #' @importFrom dplyr 'mutate'
 #' @importFrom tibble 'rownames_to_column'
+#' @importFrom chron 'as.times'
 #' @import magrittr
 
 
@@ -49,41 +50,45 @@ factor_summary <- function(dataset, column) {
 }
 
 numeric_summary <- function(dataset, column) {
+
   var <- dataset[[column]]
 
-  a <- as.data.frame(round(mean(var, na.rm = TRUE)), digits = 4)
+  a <- as.data.frame(round(mean(var, na.rm = TRUE)), digits = 2)
   names(a)[1] <- "mean"
 
-  a$median = as.numeric(median(var, na.rm = TRUE))
-  a$min = min(var, na.rm = TRUE)
-  a$max = max(var, na.rm = TRUE)
+  a$median = as.numeric(round(median(var, na.rm = TRUE)), digits = 2)
+  a$min = round(min(var, na.rm = TRUE), digits = 2)
+  a$max = round(max(var, na.rm = TRUE), digits = 2)
   a$missing = sum(is.na(dataset[[column]]))
 
   a <- a %>%
-    pivot_longer(cols = everything(), names_to = "summary")
+    pivot_longer(cols = everything(),
+                 names_to = "summary",
+                 values_to = "value",
+                 values_transform = list(value = as.character))
 
   # pivot_longer creates a tibble which actually messes with output
   a <- as.data.frame(a) # so coerce to df
 
   a$item <- ""
-  a$item[1] <- gsub('"', '', deparse(column))
+  a$item[1] <- gsub('"','', deparse(column))
 
   a$class <- ""
-  a$class[1] <-
-    paste(class(dataset[[column]]), sep = " ", collapse = " ")
+  a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
 
   a$label <- ""
-  a$label[1] <- ifelse(is.null(attr(dataset[[column]], "label")),
-                       "No label", attr(dataset[[column]], "label"))
+  a$label[1] <- ifelse(
+    is.null(attr(dataset[[column]], "label")),
+    "No label", attr(dataset[[column]], "label"))
 
   vars <- c("item", "label", "class", "summary", "value")
+
   a <- a[, vars]
 
   a$value <- as.character(a$value)
 
   return(a)
 }
-
 
 character_summary <- function(dataset, column) {
   var <- dataset[[column]]
@@ -189,6 +194,42 @@ datetime_summary <- function(dataset, column) {
 
   return(a)
 }
+
+times_summary <- function(dataset, column) {
+
+  a <- as.data.frame(as.character(mean(dataset[[column]], na.rm = TRUE)))
+  names(a)[1] <- "mean"
+
+  time_mode <- chron::as.times(mode_stat(dataset[[column]]))
+  a$mode = paste(time_mode, sep = ", ", collapse = " ")
+  a$min = as.character(min(dataset[[column]], na.rm = TRUE))
+  a$max = as.character(max(dataset[[column]], na.rm = TRUE))
+  a$missing = as.character(sum(is.na(dataset[[column]])))
+
+  a <- a %>%
+    pivot_longer(cols = everything(), names_to = "summary")
+  a <- as.data.frame(a)
+  # a$value <- as.Date(a$value, format = "%Y-%m-%d")
+
+  a$item <- ""
+  a$item[1] <- gsub('"','', deparse(column))
+
+  a$class <- ""
+  a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
+
+  a$label <- ""
+  a$label[1] <- ifelse(
+    is.null(attr(dataset[[column]], "label")),
+    "No label", attr(dataset[[column]], "label"))
+
+  vars <- c("item", "label", "class", "summary", "value")
+  a <- a[, vars]
+
+  a$value <- as.character(a$value)
+
+  return(a)
+}
+
 
 label_summary <- function(dataset, column) {
   label_values <-

@@ -1,6 +1,6 @@
 Package: dd
 Title: Creates a data dictionary
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: 
     person("Bethany", "Jones", , "r.data.nerd@gmail.com", role = c("aut", "cre"))
 Description: Creates a data dictionary from any dataset in your R environment.
@@ -9,6 +9,7 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.0
 Imports:
+    chron,
     data.table,
     dplyr,
     haven,

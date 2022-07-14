@@ -44,7 +44,7 @@ create_dictionary <- function(dataset,
     dataset <- Hmisc::upData(dataset, labels = var_labels)
   }
 
-  # initialise empty dataframe that will be the output
+  # initialise output dataframe with overall summary
   out <- dataset_summary(dataset)
 
   # create internal variable for the dataset

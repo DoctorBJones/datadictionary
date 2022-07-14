@@ -20,10 +20,17 @@ summarise_variable <- function(dataset, column) {
     allna_summary(dataset, column)
   } else if ("factor" %in% x) {
     factor_summary(dataset, column)
-  } else if (x[1] == "haven_labelled") {
+  } else if ( x[1] == "haven_labelled") {
     label_summary(dataset, column)
   } else if ("POSIXt" %in% x) {
     datetime_summary(dataset, column)
+  } else if ("times" %in% x) {
+    times_summary(dataset, column)
+  } else if ("difftime" %in% x |
+             "hms" %in% x |
+             "ms" %in% x |
+             "hm" %in% x) {
+    numeric_summary(dataset, column)
   } else if ("numeric" %in% x ||
              "integer" %in% x ||
              "double" %in% x) {
