@@ -1,22 +1,21 @@
 
-# dd
+# datadictionary
 
-The goal of dd is to create a data dictionary from any dataset in your R
-environment. While other packages exist I found the output wasn’t able
-to be easily captured in a single view. They were either very long, such
-as many pages of output in word or pdf format, or very wide, such as
-concatenating all levels of factor variables in a single string. This
-package attempts to solve those problems by presenting summaries of the
-dataset in a format that fits easily in a pane or screen, without using
-word or pdf outputs. It also presents different summaries for different
-variable types. For example, numeric data returns mean, median, min and
-max, whereas factor variables return a count of each level of the
-factor. All variable summaries include a count of missing.
+The goal of `datadictionary` is to create a data dictionary from any
+dataset in your R environment. While other packages exist I found the
+output wasn’t able to be easily captured in a single view. They were
+either very long, such as many pages of output in word or pdf format, or
+very wide, such as concatenating all levels of factor variables in a
+single string. This package attempts to solve those problems by
+presenting summaries of the dataset in a format that fits easily in a
+pane or screen, without using word or pdf outputs. It also presents
+different summaries for different variable types.
 
 It includes overall summaries of rows and columns and at-a-glance
 summaries of each variable including mean, median, min and max for
 numeric variables, counts in each level for factors, and the number of
-responses and missing for character variables.
+responses for character variables. All variable summaries include a
+count of missing values.
 
 You can nominate one or more id variables, for example individuals and
 clusters, so you don’t get nonsense data summaries for these variables.
@@ -26,12 +25,12 @@ to Excel.
 
 ## Installation
 
-You can install the development version of dd from
+You can install the development version of datadictionary from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("DoctorBJones/dd")
+devtools::install_github("DoctorBJones/datadictionary")
 ```
 
 ## Example
@@ -40,7 +39,7 @@ You can print a basic data dictionary directly to your console or assign
 it to an object in your environment:
 
 ``` r
-library(dd)
+library(datadictionary)
 
 create_dictionary(esoph)
 #>         item    label          class            summary value
@@ -82,6 +81,7 @@ you have hierarchical data, for example and have identifiers for
 individual, clusters or blocks.
 
 ``` r
+
 # create fake id variables
 mtcars$id1 <- 1:nrow(mtcars)
 mtcars$id2 <- mtcars$id1*10
@@ -95,7 +95,7 @@ create_dictionary(mtcars, id_var = c("id1", "id2"))
 #> 5   id2 Unique identifier              unique values    32
 #> 6                                            missing     0
 #> 7   mpg          No label numeric               mean    20
-#> 8                                             median  19.2
+#> 8                                             median    19
 #> 9                                                min  10.4
 #> 10                                               max  33.9
 #> 11                                           missing     0
@@ -105,7 +105,7 @@ create_dictionary(mtcars, id_var = c("id1", "id2"))
 #> 15                                               max     8
 #> 16                                           missing     0
 #> 17 disp          No label numeric               mean   231
-#> 18                                            median 196.3
+#> 18                                            median   196
 #> 19                                               min  71.1
 #> 20                                               max   472
 #> 21                                           missing     0
@@ -115,17 +115,17 @@ create_dictionary(mtcars, id_var = c("id1", "id2"))
 #> 25                                               max   335
 #> 26                                           missing     0
 #> 27 drat          No label numeric               mean     4
-#> 28                                            median 3.695
+#> 28                                            median     4
 #> 29                                               min  2.76
 #> 30                                               max  4.93
 #> 31                                           missing     0
 #> 32   wt          No label numeric               mean     3
-#> 33                                            median 3.325
-#> 34                                               min 1.513
-#> 35                                               max 5.424
+#> 33                                            median     3
+#> 34                                               min  1.51
+#> 35                                               max  5.42
 #> 36                                           missing     0
 #> 37 qsec          No label numeric               mean    18
-#> 38                                            median 17.71
+#> 38                                            median    18
 #> 39                                               min  14.5
 #> 40                                               max  22.9
 #> 41                                           missing     0
@@ -156,6 +156,7 @@ You can specify all columns or only a few. You need to pass a named
 vector where the names correspond to columns in your dataset.
 
 ``` r
+
 # Create labels as a named vector. 
 iris.labels <- c(Sepal.Length = "Sepal length in mm", Sepal.Width = "Sepal width in mm")
 
@@ -166,7 +167,7 @@ create_dictionary(iris, var_labels = iris.labels)
 #> 1                                                      Rows in dataset   150
 #> 2                                                   Columns in dataset     5
 #> 3  Sepal.Length Sepal length in mm labelled numeric               mean     6
-#> 4                                                               median   5.8
+#> 4                                                               median     6
 #> 5                                                                  min   4.3
 #> 6                                                                  max   7.9
 #> 7                                                              missing     0
@@ -176,12 +177,12 @@ create_dictionary(iris, var_labels = iris.labels)
 #> 11                                                                 max   4.4
 #> 12                                                             missing     0
 #> 13 Petal.Length           No label          numeric               mean     4
-#> 14                                                              median  4.35
+#> 14                                                              median     4
 #> 15                                                                 min     1
 #> 16                                                                 max   6.9
 #> 17                                                             missing     0
 #> 18  Petal.Width           No label          numeric               mean     1
-#> 19                                                              median   1.3
+#> 19                                                              median     1
 #> 20                                                                 min   0.1
 #> 21                                                                 max   2.5
 #> 22                                                             missing     0
@@ -196,6 +197,7 @@ function if you pass a filepath and name as a quoted string. There is no
 visible output for this use.
 
 ``` r
+
 create_dictionary(ChickWeight, file = "chickweight_dictionary.xlsx")
 ```
 
@@ -203,10 +205,11 @@ The package also includes a function to create a summary of a single
 variable in your dataset.
 
 ``` r
+
 summarise_variable(iris, "Sepal.Length")
 #>           item    label   class summary value
 #> 1 Sepal.Length No label numeric    mean     6
-#> 2                                median   5.8
+#> 2                                median     6
 #> 3                                   min   4.3
 #> 4                                   max   7.9
 #> 5                               missing     0

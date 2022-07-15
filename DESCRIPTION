@@ -1,4 +1,4 @@
-Package: dd
+Package: datadictionary
 Title: Creates a data dictionary
 Version: 0.1.2
 Authors@R: 
