@@ -40,6 +40,12 @@ create_dictionary <- function(dataset,
   if (! "data.frame" %in% dataset_class)
     stop("You can only make a dictionary for a dataframe or tibble")
 
+  if (! is.null(file)) {
+    if (grepl("xlsx$", file) == FALSE) {
+      stop("You can only write to Excel files with extension `.xlsx`")
+    }
+  }
+
   if (is.null(file)) {
     output = TRUE
   } else {
