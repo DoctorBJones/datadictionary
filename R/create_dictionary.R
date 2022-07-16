@@ -34,6 +34,12 @@ create_dictionary <- function(dataset,
                               file = NULL,
                               var_labels = NULL) {
 
+  # first check that the argument is correct class
+  dataset_class <- class(dataset)
+
+  if (! "data.frame" %in% dataset_class)
+    stop("You can only make a dictionary for a dataframe or tibble")
+
   if (is.null(file)) {
     output = TRUE
   } else {
