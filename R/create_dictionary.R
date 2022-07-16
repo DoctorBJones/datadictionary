@@ -3,7 +3,7 @@
 #'
 #'
 #' @param dataset The dataset you wish to summarise
-#' @param file The filepath to write an Excel spreadsheet (optional)
+#' @param file The file path to write an Excel spreadsheet (optional)
 #' @param var_labels A named vector of variable labels (optional)
 #' @param id_var A variable/vector of variables that are identifiers (optional)
 

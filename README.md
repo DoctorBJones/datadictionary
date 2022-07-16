@@ -197,8 +197,8 @@ create_dictionary(iris, var_labels = iris.labels)
 ```
 
 You can also write directly to Excel from the `create_dictionary`
-function if you pass a filepath and name as a quoted string. There is no
-visible output for this use.
+function if you pass a file path and name as a quoted string. There is
+no visible output for this use.
 
 ``` r
 

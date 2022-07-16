@@ -11,7 +11,7 @@ create_dictionary(dataset, id_var = NULL, file = NULL, var_labels = NULL)
 
 \item{id_var}{A variable/vector of variables that are identifiers (optional)}
 
-\item{file}{The filepath to write an Excel spreadsheet (optional)}
+\item{file}{The file path to write an Excel spreadsheet (optional)}
 
 \item{var_labels}{A named vector of variable labels (optional)}
 }
