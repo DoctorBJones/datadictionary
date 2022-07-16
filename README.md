@@ -1,4 +1,8 @@
 
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/DoctorBJones/datadictionary/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DoctorBJones/datadictionary/actions/workflows/R-CMD-check.yaml)
+<!-- badges: end -->
+
 # datadictionary
 
 The goal of `datadictionary` is to create a data dictionary from any
