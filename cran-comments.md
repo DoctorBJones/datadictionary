@@ -1,7 +1,12 @@
 ## R CMD check results
-There were no ERRORs, WARNINGs or NOTEs.
+There were no ERRORs or WARNINGs. 
 
-This is the first submission for this package.
+There are two NOTEs:
+
+* This is the first submission for this package.
+
+* This package currently fails the check for the dev version of Ubuntu. It 
+  passes checks for all other platforms.
 
 
 ## Downstream dependencies
