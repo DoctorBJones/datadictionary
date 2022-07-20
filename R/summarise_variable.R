@@ -22,7 +22,7 @@ summarise_variable <- function(dataset, column) {
     factor_summary(dataset, column)
   } else if ( x[1] == "haven_labelled") {
     label_summary(dataset, column)
-  } else if ("POSIXt" %in% x) {
+  } else if ("POSIXt" %in% x | "Date" %in% x) {
     datetime_summary(dataset, column)
   } else if ("times" %in% x) {
     times_summary(dataset, column)

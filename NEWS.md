@@ -1,5 +1,6 @@
 # datadictionary 0.1.1
 
+* Improves handling of vectors of class 'Date'
 
 # datadictionary 0.1.0
 
