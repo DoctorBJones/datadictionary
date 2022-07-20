@@ -53,7 +53,9 @@ create_dictionary <- function(dataset,
   }
 
   if (! is.null(var_labels)) {
-    dataset <- Hmisc::upData(dataset, labels = var_labels)
+    dataset <- Hmisc::upData(dataset,
+                             labels = var_labels,
+                             print = FALSE)
   }
 
   # initialise output dataframe with overall summary
