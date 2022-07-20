@@ -30,7 +30,7 @@ summarise_variable <- function(dataset, column) {
              "hms" %in% x |
              "ms" %in% x |
              "hm" %in% x) {
-    numeric_summary(dataset, column)
+    difftimes_summary(dataset, column)
   } else if ("numeric" %in% x ||
              "integer" %in% x ||
              "double" %in% x) {

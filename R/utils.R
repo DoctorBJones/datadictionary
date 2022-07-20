@@ -3,6 +3,7 @@
 #' @importFrom tidyselect 'everything'
 #' @importFrom stats 'median'
 #' @importFrom lubridate 'date'
+#' @importFrom lubridate 'seconds_to_period'
 #' @importFrom dplyr 'mutate'
 #' @importFrom tibble 'rownames_to_column'
 #' @importFrom chron 'as.times'
@@ -268,6 +269,48 @@ label_summary <- function(dataset, column) {
 
   return(a)
 
+}
+
+difftimes_summary <- function(dataset, column) {
+
+  var <- dataset[[column]]
+
+  a <- as.data.frame(lubridate::seconds_to_period(
+    floor(mean(var, na.rm = TRUE))))
+  names(a)[1] <- "mean"
+
+  a$median = lubridate::seconds_to_period(median(var, na.rm = TRUE))
+  a$min = lubridate::seconds_to_period(min(var, na.rm = TRUE))
+  a$max = lubridate::seconds_to_period(max(var, na.rm = TRUE))
+  a$missing = sum(is.na(dataset[[column]]))
+
+  a <- a %>%
+    pivot_longer(cols = everything(),
+                 names_to = "summary",
+                 values_to = "value",
+                 values_transform = list(value = as.character))
+
+  # pivot_longer creates a tibble which actually messes with output
+  a <- as.data.frame(a) # so coerce to df
+
+  a$item <- ""
+  a$item[1] <- gsub('"','', deparse(column))
+
+  a$class <- ""
+  a$class[1] <- paste(class(dataset[[column]]), sep = " ", collapse = " ")
+
+  a$label <- ""
+  a$label[1] <- ifelse(
+    is.null(attr(dataset[[column]], "label")),
+    "No label", attr(dataset[[column]], "label"))
+
+  vars <- c("item", "label", "class", "summary", "value")
+
+  a <- a[, vars]
+
+  a$value <- as.character(a$value)
+
+  return(a)
 }
 
 
