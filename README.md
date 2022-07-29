@@ -7,18 +7,16 @@
 # datadictionary
 
 The goal of `datadictionary` is to create a data dictionary from any
-dataset in your R environment. While other packages exist I found the
-output wasn’t able to be easily captured in a single view. They were
-either very long, such as many pages of output in word or pdf format, or
-very wide, such as concatenating all levels of factor variables in a
-single string. This package attempts to solve those problems by
-presenting summaries of the dataset in a format that fits easily in a
-pane or screen, without using word or pdf outputs. It also presents
-different summaries for different variable types.
+dataframe or tibble in your R environment. While other packages exist I
+found they were complicated to use and/or the output wasn’t what I was
+after. This package attempts to solve those problems by presenting
+tabular summaries of the dataset in a format that fits easily in a pane
+or screen, using a single line of code. It also produces different
+summaries for different variable types.
 
-It includes overall summaries of rows and columns and at-a-glance
-summaries of each variable including mean, median, min and max for
-numeric variables, counts in each level for factors, and the number of
+It includes an overall summary of the dataset and at-a-glance summaries
+of each variable including mean, median, min and max for numeric
+variables, counts in each level for factors, and the number of unique
 responses for character variables. All variable summaries include a
 count of missing values.
 
@@ -30,7 +28,13 @@ to Excel.
 
 ## Installation
 
-You can install the development version of datadictionary from
+You can install the current version of `datadictionary` from CRAN using:
+
+``` r
+install.packages("datadictionary")
+```
+
+You can install the development version of `datadictionary` from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -83,7 +87,7 @@ esoph_dictionary <- create_dictionary(esoph)
 
 You can also specify one or more identifier variables. This is useful if
 you have hierarchical data, for example and have identifiers for
-individual, clusters or blocks.
+individuals, clusters or blocks.
 
 ``` r
 
@@ -156,9 +160,9 @@ create_dictionary(mtcars, id_var = c("id1", "id2"))
 #> 61                                           missing     0
 ```
 
-You can also optionally add labels for variables that have no labels.
-You can specify all columns or only a few. You need to pass a named
-vector where the names correspond to columns in your dataset.
+You can also optionally add labels for unlabelled variables. You can
+specify all columns or only a few. You need to pass a named vector where
+the names correspond to columns in your dataset.
 
 ``` r
 
@@ -166,8 +170,6 @@ vector where the names correspond to columns in your dataset.
 iris.labels <- c(Sepal.Length = "Sepal length in mm", Sepal.Width = "Sepal width in mm")
 
 create_dictionary(iris, var_labels = iris.labels)
-#> Input object size:    7256 bytes;     5 variables     150 observations
-#> New object size: 8344 bytes; 5 variables 150 observations
 #>            item              label            class            summary value
 #> 1                                                      Rows in dataset   150
 #> 2                                                   Columns in dataset     5
