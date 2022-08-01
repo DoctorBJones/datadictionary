@@ -11,20 +11,31 @@ dataframe or tibble in your R environment. While other packages exist I
 found they were complicated to use and/or the output wasn’t what I was
 after. This package attempts to solve those problems by presenting
 tabular summaries of the dataset in a format that fits easily in a pane
-or screen, using a single line of code. It also produces different
-summaries for different variable types.
+or screen, using a single line of code.
 
 It includes an overall summary of the dataset and at-a-glance summaries
-of each variable including mean, median, min and max for numeric
-variables, counts in each level for factors, and the number of unique
-responses for character variables. All variable summaries include a
-count of missing values.
+of each variable. All variables have a count of missing included, and
+different summaries are provided based on the data class.
 
-You can nominate one or more id variables, for example individuals and
-clusters, so you don’t get nonsense data summaries for these variables.
+For factors, labelled data and logicals the summary will include the
+name of each level with the level number in parentheses where
+appropriate. A value for the count of units in each level is included.
+
+For dates, integers and other numeric types of data the summary includes
+statistical summaries such as mean, median, mode, minimum and maximum. A
+value for each is included in the table.
+
+Character variables include only a count of unique values and missing
+values. This is the default so if you include a class of data that isn’t
+yet implemented you should get this output.
+
+You can nominate one or more identifier variables, for example
+individuals and clusters, so you only get a count of unique and missing
+values rather than nonsense numeric summaries.
+
 You can also include a vector to add labels if you want descriptions
-included in the document. You can opt for the output to write directly
-to Excel.
+included in the document. Lastly, you can opt for the output to write
+directly to Excel.
 
 ## Installation
 
@@ -85,9 +96,10 @@ create_dictionary(esoph)
 esoph_dictionary <- create_dictionary(esoph)
 ```
 
-You can also specify one or more identifier variables. This is useful if
-you have hierarchical data, for example and have identifiers for
-individuals, clusters or blocks.
+You specify one or more identifier variables by passing a quoted string
+or vector of quoted strings to `id_var`. This is useful if you have
+hierarchical data, for example and have identifiers for individuals,
+clusters or blocks.
 
 ``` r
 
@@ -161,13 +173,14 @@ create_dictionary(mtcars, id_var = c("id1", "id2"))
 ```
 
 You can also optionally add labels for unlabelled variables. You can
-specify all columns or only a few. You need to pass a named vector where
-the names correspond to columns in your dataset.
+specify all columns or only a few. You need to pass a named vector to
+`var_labels` where the names correspond to columns in your dataset.
 
 ``` r
 
 # Create labels as a named vector. 
-iris.labels <- c(Sepal.Length = "Sepal length in mm", Sepal.Width = "Sepal width in mm")
+iris.labels <- c(Sepal.Length = "Sepal length in mm", 
+                 Sepal.Width = "Sepal width in mm")
 
 create_dictionary(iris, var_labels = iris.labels)
 #>            item              label            class            summary value
@@ -200,8 +213,8 @@ create_dictionary(iris, var_labels = iris.labels)
 ```
 
 You can also write directly to Excel from the `create_dictionary`
-function if you pass a file path and name as a quoted string. There is
-no visible output for this use.
+function if you pass a file path and name as a quoted string to the
+`file` parameter. There is no visible output for this use.
 
 ``` r
 
@@ -209,7 +222,7 @@ create_dictionary(ChickWeight, file = "chickweight_dictionary.xlsx")
 ```
 
 The package also includes a function to create a summary of a single
-variable in your dataset.
+variable in your dataset. There are no other arguments to this function.
 
 ``` r
 
