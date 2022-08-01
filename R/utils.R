@@ -3,7 +3,6 @@
 #' @importFrom tidyselect 'everything'
 #' @importFrom stats 'median'
 #' @importFrom lubridate 'date'
-#' @importFrom lubridate 'seconds_to_period'
 #' @importFrom dplyr 'mutate'
 #' @importFrom tibble 'rownames_to_column'
 #' @importFrom chron 'as.times'
@@ -274,13 +273,12 @@ difftimes_summary <- function(dataset, column) {
 
   var <- dataset[[column]]
 
-  a <- as.data.frame(lubridate::seconds_to_period(
-    floor(mean(var, na.rm = TRUE))))
+  a <- as.data.frame(floor(mean(var, na.rm = TRUE)))
   names(a)[1] <- "mean"
 
-  a$median = lubridate::seconds_to_period(median(var, na.rm = TRUE))
-  a$min = lubridate::seconds_to_period(min(var, na.rm = TRUE))
-  a$max = lubridate::seconds_to_period(max(var, na.rm = TRUE))
+  a$median = median(var, na.rm = TRUE)
+  a$min = min(var, na.rm = TRUE)
+  a$max = max(var, na.rm = TRUE)
   a$missing = sum(is.na(dataset[[column]]))
 
   a <- a %>%
