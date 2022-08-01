@@ -201,8 +201,7 @@ times_summary <- function(dataset, column) {
   a <- as.data.frame(as.character(mean(dataset[[column]], na.rm = TRUE)))
   names(a)[1] <- "mean"
 
-  time_mode <- chron::as.times(mode_stat(dataset[[column]]))
-  a$mode = paste(time_mode, sep = ", ", collapse = " ")
+  a$median = as.character(median(dataset[[column]], na.rm = TRUE))
   a$min = as.character(min(dataset[[column]], na.rm = TRUE))
   a$max = as.character(max(dataset[[column]], na.rm = TRUE))
   a$missing = as.character(sum(is.na(dataset[[column]])))
