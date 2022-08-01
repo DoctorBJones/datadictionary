@@ -6,7 +6,7 @@ Authors@R:
            family = "Jones",
            role = c("aut", "cre"),
            email = "r.data.nerd@gmail.com")
-Description: Creates a data dictionary from any dataset in your R environment. 
+Description: Creates a data dictionary from any dataframe or tibble in your R environment. 
     You can opt to add variable labels. You can write the object directly to Excel.
 License: MIT + file LICENSE
 Encoding: UTF-8
