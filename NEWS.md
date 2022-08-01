@@ -2,6 +2,7 @@
 
 * Improves handling of vectors of class 'Date'
 * Improves handling of vectors of class 'difftime'
+* Improves output for vectors of class 'times'
 
 # datadictionary 0.1.0
 
