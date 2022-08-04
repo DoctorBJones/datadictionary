@@ -18,7 +18,7 @@ Imports:
     data.table,
     dplyr,
     haven,
-    Hmisc,
+    labelled,
     lubridate,
     magrittr,
     openxlsx,

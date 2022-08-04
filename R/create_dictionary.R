@@ -12,7 +12,7 @@
 #' @importFrom haven 'as_factor'
 #' @importFrom data.table '%like%'
 #' @importFrom openxlsx 'write.xlsx'
-#' @importFrom Hmisc 'upData'
+#' @importFrom labelled 'var_label'
 #'
 #' @examples
 #'
@@ -53,9 +53,7 @@ create_dictionary <- function(dataset,
   }
 
   if (! is.null(var_labels)) {
-    dataset <- Hmisc::upData(dataset,
-                             labels = var_labels,
-                             print = FALSE)
+    labelled::var_label(dataset) <- list(var_labels)
   }
 
   # initialise output dataframe with overall summary
