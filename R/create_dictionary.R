@@ -25,7 +25,10 @@
 #'
 #'  # You can also specify labels with a named vector
 #'  iris.labels <- c(Sepal.Length = "Sepal length in mm",
-#'      Sepal.Width = "Sepal width in mm")
+#'      Sepal.Width = "Sepal width in mm",
+#'      Petal.Length = "Petal length in mm",
+#'      Petal.Width = "Petal width in mm",
+#'      Species = "Species of iris)
 #'  create_dictionary(iris, var_labels = iris.labels)
 #'
 #' @export
@@ -53,7 +56,7 @@ create_dictionary <- function(dataset,
   }
 
   if (! is.null(var_labels)) {
-    labelled::var_label(dataset) <- list(var_labels)
+    labelled::var_label(dataset) <- var_labels
   }
 
   # initialise output dataframe with overall summary
