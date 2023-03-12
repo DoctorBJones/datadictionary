@@ -35,7 +35,8 @@ summarise_variable <- function(dataset, column) {
              "integer" %in% x ||
              "double" %in% x) {
     numeric_summary(dataset, column)
-  } else if (x %in% c("logical", "boolean")) {
+  } else if ("logical" %in% x |
+             "boolean" %in% x ) {
     logical_summary(dataset, column)
   } else {
     character_summary(dataset, column)
