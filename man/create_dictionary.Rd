@@ -21,3 +21,21 @@ Either an Excel spreadsheet or a dataframe
 \description{
 Create a data dictionary from any dataset
 }
+\examples{
+
+ # A simple dictionary printed to console
+ create_dictionary(esoph)
+
+ # You can specify id variable/s
+ mtcars$id <- 1:nrow(mtcars)
+ create_dictionary(mtcars, id_var = "id")
+
+ # You can also specify labels with a named vector
+ iris.labels <- c(Sepal.Length = "Sepal length in mm",
+     Sepal.Width = "Sepal width in mm",
+     Petal.Length = "Petal length in mm",
+     Petal.Width = "Petal width in mm",
+     Species = "Species of iris")
+ create_dictionary(iris, var_labels = iris.labels)
+
+}
