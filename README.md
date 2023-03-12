@@ -1,6 +1,6 @@
 
-<!-- badges: start --> 
-[![CRAN status](https://www.r-pkg.org/badges/version/datadictionary)](https://cran.r-project.org/package=datadictionary)
+<!-- badges: start --> [![CRAN
+status](https://www.r-pkg.org/badges/version/datadictionary)](https://cran.r-project.org/package=datadictionary)
 [![R-CMD-check](https://github.com/DoctorBJones/datadictionary/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DoctorBJones/datadictionary/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
@@ -172,44 +172,48 @@ create_dictionary(mtcars, id_var = c("id1", "id2"))
 #> 61                                           missing     0
 ```
 
-You can also optionally add labels for unlabelled variables. You can
-specify all columns or only a few. You need to pass a named vector to
-`var_labels` where the names correspond to columns in your dataset.
+You can also optionally add labels for unlabelled variables. You need to
+pass a named vector to `var_labels` where the names correspond to
+columns in your dataset. The vector must be of the same length as your
+dataset.
 
 ``` r
 
 # Create labels as a named vector. 
-iris.labels <- c(Sepal.Length = "Sepal length in mm", 
-                 Sepal.Width = "Sepal width in mm")
+iris.labels <- c(Sepal.Length = "Sepal length in mm",
+                 Sepal.Width = "Sepal width in mm",
+                 Petal.Length = "Petal length in mm",
+                 Petal.Width = "Petal width in mm",
+                 Species = "Species of iris")
 
 create_dictionary(iris, var_labels = iris.labels)
-#>            item              label            class            summary value
-#> 1                                                      Rows in dataset   150
-#> 2                                                   Columns in dataset     5
-#> 3  Sepal.Length Sepal length in mm labelled numeric               mean     6
-#> 4                                                               median     6
-#> 5                                                                  min   4.3
-#> 6                                                                  max   7.9
-#> 7                                                              missing     0
-#> 8   Sepal.Width  Sepal width in mm labelled numeric               mean     3
-#> 9                                                               median     3
-#> 10                                                                 min     2
-#> 11                                                                 max   4.4
-#> 12                                                             missing     0
-#> 13 Petal.Length           No label          numeric               mean     4
-#> 14                                                              median     4
-#> 15                                                                 min     1
-#> 16                                                                 max   6.9
-#> 17                                                             missing     0
-#> 18  Petal.Width           No label          numeric               mean     1
-#> 19                                                              median     1
-#> 20                                                                 min   0.1
-#> 21                                                                 max   2.5
-#> 22                                                             missing     0
-#> 23      Species           No label           factor         setosa (1)    50
-#> 24                                                      versicolor (2)    50
-#> 25                                                       virginica (3)    50
-#> 26                                                             missing     0
+#>            item              label   class            summary value
+#> 1                                             Rows in dataset   150
+#> 2                                          Columns in dataset     5
+#> 3  Sepal.Length Sepal length in mm numeric               mean     6
+#> 4                                                      median     6
+#> 5                                                         min   4.3
+#> 6                                                         max   7.9
+#> 7                                                     missing     0
+#> 8   Sepal.Width  Sepal width in mm numeric               mean     3
+#> 9                                                      median     3
+#> 10                                                        min     2
+#> 11                                                        max   4.4
+#> 12                                                    missing     0
+#> 13 Petal.Length Petal length in mm numeric               mean     4
+#> 14                                                     median     4
+#> 15                                                        min     1
+#> 16                                                        max   6.9
+#> 17                                                    missing     0
+#> 18  Petal.Width  Petal width in mm numeric               mean     1
+#> 19                                                     median     1
+#> 20                                                        min   0.1
+#> 21                                                        max   2.5
+#> 22                                                    missing     0
+#> 23      Species    Species of iris  factor         setosa (1)    50
+#> 24                                             versicolor (2)    50
+#> 25                                              virginica (3)    50
+#> 26                                                    missing     0
 ```
 
 You can also write directly to Excel from the `create_dictionary`

@@ -72,13 +72,17 @@ mtcars$id2 <- mtcars$id1*10
 create_dictionary(mtcars, id_var = c("id1", "id2"))
 
 ```
-You can also optionally add labels for unlabelled variables. You can specify all columns or only a few. You need to pass a named vector  to `var_labels` where the names correspond to columns in your dataset.
+You can also optionally add labels for unlabelled variables. You need to pass a named vector  to `var_labels` where the names 
+correspond to columns in your dataset. The vector must be of the same length as your dataset.
 
 ```{r}
 
 # Create labels as a named vector. 
-iris.labels <- c(Sepal.Length = "Sepal length in mm", 
-                 Sepal.Width = "Sepal width in mm")
+iris.labels <- c(Sepal.Length = "Sepal length in mm",
+                 Sepal.Width = "Sepal width in mm",
+                 Petal.Length = "Petal length in mm",
+                 Petal.Width = "Petal width in mm",
+                 Species = "Species of iris")
 
 create_dictionary(iris, var_labels = iris.labels)
 ```

@@ -28,7 +28,7 @@
 #'      Sepal.Width = "Sepal width in mm",
 #'      Petal.Length = "Petal length in mm",
 #'      Petal.Width = "Petal width in mm",
-#'      Species = "Species of iris)
+#'      Species = "Species of iris")
 #'  create_dictionary(iris, var_labels = iris.labels)
 #'
 #' @export
