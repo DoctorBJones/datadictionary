@@ -1,4 +1,4 @@
-# datadictionary 0.1.1
+# datadictionary 1.0.0
 
 * Improves handling of vectors of class 'Date'
 * Improves handling of vectors of class 'difftime'

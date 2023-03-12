@@ -1,10 +1,8 @@
 ## R CMD check results
-There were no ERRORs or WARNINGs. 
 
-There is one NOTE:
-
-* This is the first submission for this package.
+0 errors | 0 warnings | 0 notes
 
 
-## Downstream dependencies
-There are currently no downstream dependencies for this package.
+## revdepcheck results
+
+There are currently no downstream dependencies for this package
