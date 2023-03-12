@@ -1,7 +1,9 @@
 
-<!-- badges: start --> [![CRAN
+<!-- badges: start --> 
+[![CRAN
 status](https://www.r-pkg.org/badges/version/datadictionary)](https://cran.r-project.org/package=datadictionary)
 [![R-CMD-check](https://github.com/DoctorBJones/datadictionary/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/DoctorBJones/datadictionary/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/DoctorBJones/datadictionary/branch/main/graph/badge.svg)](https://app.codecov.io/gh/DoctorBJones/datadictionary?branch=main)
 <!-- badges: end -->
 
 # datadictionary
