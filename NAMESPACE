@@ -3,7 +3,6 @@
 export(create_dictionary)
 export(summarise_variable)
 importFrom(chron,'as.times')
-importFrom(data.table,'%like%')
 importFrom(dplyr,'mutate')
 importFrom(haven,'as_factor')
 importFrom(labelled,'var_label')

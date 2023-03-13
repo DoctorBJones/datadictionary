@@ -10,7 +10,6 @@
 #' @return Either an Excel spreadsheet or a dataframe
 #'
 #' @importFrom haven 'as_factor'
-#' @importFrom data.table '%like%'
 #' @importFrom openxlsx 'write.xlsx'
 #' @importFrom labelled 'var_label'
 #'
