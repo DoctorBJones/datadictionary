@@ -20,7 +20,6 @@ Imports:
     haven,
     labelled,
     lubridate,
-    magrittr,
     openxlsx,
     stats,
     tibble,

@@ -1,4 +1,5 @@
 # datadictionary (development version)
+* Moves code from magrittr to base pipe
 
 # datadictionary 1.0.0
 

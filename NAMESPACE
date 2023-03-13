@@ -2,7 +2,6 @@
 
 export(create_dictionary)
 export(summarise_variable)
-import(magrittr)
 importFrom(chron,'as.times')
 importFrom(data.table,'%like%')
 importFrom(dplyr,'mutate')

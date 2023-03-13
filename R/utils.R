@@ -6,7 +6,6 @@
 #' @importFrom dplyr 'mutate'
 #' @importFrom tibble 'rownames_to_column'
 #' @importFrom chron 'as.times'
-#' @import magrittr
 
 
 factor_summary <- function(dataset, column) {
@@ -22,7 +21,7 @@ factor_summary <- function(dataset, column) {
   # this creates the factor level with it's value in parentheses
   # e.g. Strongly disagree (5)
 
-  a <- a %>%
+  a <- a |>
     dplyr::mutate(summary = paste(summary,
                                   " (",
                                   as.numeric(summary),
@@ -61,7 +60,7 @@ numeric_summary <- function(dataset, column) {
   a$max = round(max(var, na.rm = TRUE), digits = 2)
   a$missing = sum(is.na(dataset[[column]]))
 
-  a <- a %>%
+  a <- a |>
     pivot_longer(cols = everything(),
                  names_to = "summary",
                  values_to = "value",
@@ -99,7 +98,7 @@ character_summary <- function(dataset, column) {
 
   a$missing <- sum(is.na(var))
 
-  a <- a %>%
+  a <- a |>
     pivot_longer(cols = everything(), names_to = "summary")
 
   if (a$value[1] < 10) {
@@ -172,7 +171,7 @@ datetime_summary <- function(dataset, column) {
   a$max = as.character(max(var, na.rm = TRUE))
   a$missing = as.character(sum(is.na(dataset[[column]])))
 
-  a <- a %>%
+  a <- a |>
     pivot_longer(cols = everything(), names_to = "summary")
   a <- as.data.frame(a)
 
@@ -205,7 +204,7 @@ times_summary <- function(dataset, column) {
   a$max = as.character(max(dataset[[column]], na.rm = TRUE))
   a$missing = as.character(sum(is.na(dataset[[column]])))
 
-  a <- a %>%
+  a <- a |>
     pivot_longer(cols = everything(), names_to = "summary")
   a <- as.data.frame(a)
   # a$value <- as.Date(a$value, format = "%Y-%m-%d")
@@ -232,7 +231,7 @@ times_summary <- function(dataset, column) {
 
 label_summary <- function(dataset, column) {
   label_values <-
-    as.data.frame(attributes(dataset[[column]])$labels) %>%
+    as.data.frame(attributes(dataset[[column]])$labels) |>
     rownames_to_column()
 
   names(label_values)[1] <- "label"
@@ -281,7 +280,7 @@ difftimes_summary <- function(dataset, column) {
   a$max = max(var, na.rm = TRUE)
   a$missing = sum(is.na(dataset[[column]]))
 
-  a <- a %>%
+  a <- a |>
     pivot_longer(cols = everything(),
                  names_to = "summary",
                  values_to = "value",
@@ -348,7 +347,7 @@ dataset_summary <- function(dataset) {
   names(a)[1] <- "Rows in dataset"
   names(a)[2] <- "Columns in dataset"
 
-  a <- a %>%
+  a <- a |>
     pivot_longer(cols = everything(), names_to = "summary")
   a <- as.data.frame(a)
 
