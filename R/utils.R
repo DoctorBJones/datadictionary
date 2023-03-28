@@ -335,7 +335,7 @@ allna_summary <- function(dataset, column) {
                    "No label", attr(dataset[[column]], "label")),
     class = paste(class(dataset[[column]]), sep = " ", collapse = " "),
     summary = "missing",
-    value = length(dataset[[column]])
+    value = as.character(length(dataset[[column]]))
   )
 }
 

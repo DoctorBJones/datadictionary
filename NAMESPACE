@@ -3,6 +3,7 @@
 export(create_dictionary)
 export(summarise_variable)
 importFrom(chron,'as.times')
+importFrom(dplyr,'bind_rows')
 importFrom(dplyr,'mutate')
 importFrom(haven,'as_factor')
 importFrom(labelled,'var_label')

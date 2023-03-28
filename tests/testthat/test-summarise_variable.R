@@ -153,7 +153,7 @@ testthat::test_that("classes", {
 
   testthat::expect_equal(
     nas$value[1],
-    11
+    "11"
   )
 
   # times

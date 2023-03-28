@@ -12,6 +12,7 @@
 #' @importFrom haven 'as_factor'
 #' @importFrom openxlsx 'write.xlsx'
 #' @importFrom labelled 'var_label'
+#' @importFrom dplyr 'bind_rows'
 #'
 #' @examples
 #'
@@ -73,7 +74,7 @@ create_dictionary <- function(dataset,
     for (i in vec) {
       f <- id_summary(dataset, i)
 
-      out <- rbind(out, f)
+      out <- dplyr::bind_rows(out, f)
 
       df <- df[, ! names(df) == i]
       }
@@ -87,7 +88,7 @@ create_dictionary <- function(dataset,
 
     x <- summarise_variable(df, col)
 
-    out <- rbind(out, x)
+    out <- dplyr::bind_rows(out, x)
   }
 
   if (output == FALSE) {
