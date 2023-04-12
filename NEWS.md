@@ -1,5 +1,7 @@
 # datadictionary (development version)
+
 * Moves code from magrittr to base pipe
+* Corrects error that occurred when summarising partially labelled data
 
 # datadictionary 1.0.0
 
