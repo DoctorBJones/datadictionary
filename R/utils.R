@@ -230,41 +230,54 @@ times_summary <- function(dataset, column) {
 
 
 label_summary <- function(dataset, column) {
-  label_values <-
-    as.data.frame(attributes(dataset[[column]])$labels) |>
-    rownames_to_column()
 
-  names(label_values)[1] <- "label"
-  names(label_values)[2] <- "value"
+  if (length(unique(dataset[[column]])) ==
+      length(attr(dataset[[column]], "labels"))) {
 
-  label_values$summary <-
-    paste(label_values$label, " (", label_values$value, ")",
-          sep = "")
+    label_values <-
+      as.data.frame(attributes(dataset[[column]])$labels) |>
+      tibble::rownames_to_column()
 
-  a <- as.data.frame(table(dataset[[column]]))
-  names(a)[1] <- "num_val"
-  names(a)[2] <- "value"
+    names(label_values)[1] <- "label"
+    names(label_values)[2] <- "value"
 
-  a <- merge(a, label_values, by.x = "num_val", by.y = "value")
+    label_values$summary <-
+      paste(label_values$label, " (", label_values$value, ")",
+            sep = "")
 
-  a$item <- ""
-  a$item[1] <- gsub('"', '', deparse(column))
+    a <- as.data.frame(table(dataset[[column]]))
+    names(a)[1] <- "num_val"
+    names(a)[2] <- "value"
 
-  a$class <- ""
-  a$class[1] <-
-    paste(class(dataset[[column]]), sep = " ", collapse = " ")
+    a <- merge(a, label_values, by.x = "num_val", by.y = "value")
 
-  a$label <- ""
-  a$label[1] <- ifelse(is.null(attr(dataset[[column]], "label")),
-                       "No label", attr(dataset[[column]], "label"))
+    a$item <- ""
+    a$item[1] <- gsub('"', '', deparse(column))
 
-  vars <- c("item", "label", "class", "summary", "value")
-  a <- a[, vars]
-  a[nrow(a) + 1, ] <-
-    c("", "", "", "missing", sum(is.na(dataset[[column]])))
-  a$value <- as.character(a$value)
+    a$class <- ""
+    a$class[1] <-
+      paste(class(dataset[[column]]), sep = " ", collapse = " ")
 
-  return(a)
+    a$label <- ""
+    a$label[1] <- ifelse(is.null(attr(dataset[[column]], "label")),
+                         "No label", attr(dataset[[column]], "label"))
+
+    vars <- c("item", "label", "class", "summary", "value")
+    a <- a[, vars]
+    a[nrow(a) + 1, ] <-
+      c("", "", "", "missing", sum(is.na(dataset[[column]])))
+    a$value <- as.character(a$value)
+
+    return(a)
+
+  } else {
+
+    msg <- paste0(column, " has different numbers of labels and levels. It has been treated as numeric")
+    warning(msg)
+
+    numeric_summary(dataset = dataset, column = column)
+
+  }
 
 }
 

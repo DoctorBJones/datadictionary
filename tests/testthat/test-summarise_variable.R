@@ -26,6 +26,14 @@ testthat::test_that("error", {
       "bad_factor"),
     "bad_factor has more than 10 levels, did you want a character variable?"
   )
+
+  testthat::expect_warning(
+    summarise_variable(
+      readRDS(file = testthat::test_path("testdata", 'tester.rds')),
+      "bad_labels"),
+    "bad_labels has different numbers of labels and levels. It has been treated as numeric"
+    )
+
 })
 
 # test each data class
@@ -78,7 +86,17 @@ testthat::test_that("classes", {
 
   testthat::expect_equal(
     s$summary[3],
-    "Vic (4)"
+    "Qld (3)"
+  )
+
+  # haven partially labelled
+  p <- summarise_variable(
+    readRDS(file = testthat::test_path("testdata", 'tester.rds')),
+    "bad_labels")
+
+  testthat::expect_equal(
+    p$summary[1],
+    "mean"
   )
 
   # difftime

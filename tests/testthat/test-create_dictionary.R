@@ -25,7 +25,7 @@ testthat::test_that("dictionary",{
   )
 
   testthat::expect_equal(over$value[2],
-                         "14"
+                         "15"
   )
 
   # dimensions of object
@@ -34,7 +34,7 @@ testthat::test_that("dictionary",{
     id_var = "id")
 
   testthat::expect_equal(nrow(len),
-    62
+    67
   )
 
   # id var properly summarised
@@ -59,7 +59,8 @@ testthat::test_that("dictionary",{
     lab_location = "Location",
     effective_date = "Date recorded",
     all_missing = "Missing data",
-    time_recorded = "Time recorded"
+    time_recorded = "Time recorded",
+    labelled_data = "Labelled"
                    )
 
   lab <- create_dictionary(
