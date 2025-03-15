@@ -2,6 +2,7 @@
 
 * Moves code from magrittr to base pipe
 * Corrects error that occurred when summarising partially labelled data
+* Adds URLs to DESCRIPTION
 
 # datadictionary 1.0.0
 
