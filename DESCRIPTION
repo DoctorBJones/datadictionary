@@ -1,6 +1,6 @@
 Package: datadictionary
 Title: Create a Data Dictionary
-Version: 1.0.1
+Version: 1.0.1.9000
 Authors@R: 
     person(given = "Bethany", 
            family = "Jones",
